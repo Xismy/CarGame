@@ -1,0 +1,23 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "4.13",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "Juego",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"AnimGraph"
+			]
+		},
+
+		{
+            		"Name": "EditorExtension",
+            		"Type": "Editor",
+            		"LoadingPhase":  "PostEngineInit"
+        	}
+	]
+}
