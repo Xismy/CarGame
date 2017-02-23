@@ -1,2 +1,2 @@
 # CarGame
-Shoting car game developed with Unreal Engine.
+Shooting car game developed with Unreal Engine.
