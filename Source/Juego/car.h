@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "GameFramework/WheeledVehicle.h"
+#include "WheeledVehicle.h"
 #include "weapon.h"
 #include "car.generated.h"
 
@@ -19,6 +19,8 @@ public:
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	virtual void SetupPlayerInputComponent(UInputComponent * InputComponent) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Car")
 	void nitro(float force, float cooldown, float time);

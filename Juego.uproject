@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "4.13",
+	"EngineAssociation": "4.15",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -10,14 +10,14 @@
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
 				"Engine",
-				"AnimGraph"
+				"AnimGraph",
+				"PhysXVehicles"
 			]
 		},
-
 		{
-            		"Name": "EditorExtension",
-            		"Type": "Editor",
-            		"LoadingPhase":  "PostEngineInit"
-        	}
+			"Name": "EditorExtension",
+			"Type": "Editor",
+			"LoadingPhase": "PostEngineInit"
+		}
 	]
 }

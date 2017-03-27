@@ -6,35 +6,71 @@
 void Acar::BeginPlay(){
 	Super::BeginPlay();
 
-	//Get car components
-	TSet<UActorComponent*> components = GetComponents();
+	Super::SetupPlayerInputComponent(InputComponent);
+	TArray<UActorComponent*> children = GetComponentsByClass(UChildActorComponent::StaticClass());
+	UChildActorComponent* weapon_child = 0;
+	AActor* weapon_actor;
+	
+	UCameraComponent* camera;
 
-	//Get camera arm
-	USpringArmComponent* spring = 0;
-	for (int i = 0; i < components.Num(); i++) {
-		spring = Cast<USpringArmComponent>(components.Array()[i]);
-		if (spring)
-			break;
-	}
-
-	//Get weapon
-	UChildActorComponent* child = 0;
-	for (int i = 0; i < components.Num(); i++) {
-		child = Cast<UChildActorComponent>(components.Array()[i]);
-		if (child) {
-			components = child->GetChildActor()->GetComponents();
-
-			//Get weapon component and add camera
-			for (int j = 0; j < components.Num(); j++) {
-				weapon = Cast<Uweapon>(components.Array()[j]);
-				if (weapon && spring) {
-					weapon->setCamera(spring);
-					break;
+	for (int i = 0; i < children.Num(); i++) {
+		weapon_child = Cast<UChildActorComponent>(children[i]);
+		if (weapon_child) {
+			weapon_actor = weapon_child->GetChildActor();
+			weapon = Cast<Uweapon>(weapon_actor->GetComponentByClass(Uweapon::StaticClass()));
+			if (weapon) {
+				check(InputComponent);
+				InputComponent->BindAxis("Vertical Camera", weapon, &Uweapon::setPitch);
+				InputComponent->BindAxis("Horizontal Camera", weapon, &Uweapon::setYaw);
+				camera = Cast<UCameraComponent>(weapon->GetOwner()->GetComponentByClass(UCameraComponent::StaticClass()));
+				if (camera) {
+					GetNetOwningPlayer()->PlayerController->SetViewTarget(weapon_actor);
+					return;
 				}
+				GEngine->AddOnScreenDebugMessage(0, 2, FColor::Red, FString::Printf(TEXT("Weapon has no camera")));
+				return;
 			}
-			break;
+			GEngine->AddOnScreenDebugMessage(0, 2, FColor::Red, FString::Printf(TEXT("Car has no weapon")));;
 		}
 	}
+
+	GEngine->AddOnScreenDebugMessage(0, 2, FColor::Red, FString::Printf(TEXT("Car has no weapon child")));
+
+	////Get car components
+	//TSet<UActorComponent*> components = GetComponents();
+
+	////Get camera arm
+	//USpringArmComponent* spring = 0;
+	//for (int i = 0; i < components.Num(); i++) {
+	//	spring = Cast<USpringArmComponent>(components.Array()[i]);
+	//	if (spring)
+	//		break;
+	//}
+
+	////Get weapon
+	//UChildActorComponent* child = 0;
+	//for (int i = 0; i < components.Num(); i++) {
+	//	child = Cast<UChildActorComponent>(components.Array()[i]);
+	//	if (child) {
+	//		components = child->GetChildActor()->GetComponents();
+
+	//		//Get weapon component and add camera
+	//		for (int j = 0; j < components.Num(); j++) {
+	//			weapon = Cast<Uweapon>(components.Array()[j]);
+	//			if (weapon && spring) {
+	//				weapon->setCamera(spring);
+	//				break;
+	//			}
+	//		}
+	//		break;
+	//	}
+	//}
+}
+
+void Acar::SetupPlayerInputComponent(class UInputComponent* InputComponent) {
+	Super::SetupPlayerInputComponent(InputComponent);
+	
+	this->InputComponent = InputComponent;
 }
 
 void Acar::nitro(float force, float cooldown, float time) {

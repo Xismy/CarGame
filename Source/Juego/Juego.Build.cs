@@ -11,11 +11,11 @@ public class Juego : ModuleRules
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
 
-        CircularlyReferencedDependentModules.AddRange(
+       /* CircularlyReferencedDependentModules.AddRange(
             new string[] {
                     "EditorExtension",
                 }
-        );
+        );*/
 
         // Uncomment if you are using Slate UI
         // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

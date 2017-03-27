@@ -20,6 +20,12 @@ struct JUEGO_API FAnimNode_weapon : public FAnimNode_Base {
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkeletalControl)
 	FBoneReference arm;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Settings, meta = (AlwaysAsPin))
+	float pitch;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Settings, meta = (AlwaysAsPin))
+	float yaw;
+
 	//Interface
 	virtual void Initialize(const FAnimationInitializeContext& Context) override;
 	virtual void CacheBones(const FAnimationCacheBonesContext & Context) override;

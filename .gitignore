@@ -2,6 +2,6 @@
 Binaries
 Intermediate
 Saved
-*.opensdf
-*.sdf
+Models
+*.db
 *.sln

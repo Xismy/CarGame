@@ -7,12 +7,7 @@
 // Sets default values for this component's properties
 Uweapon::Uweapon()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	bWantsBeginPlay = true;
-	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
 
 
@@ -34,10 +29,6 @@ void Uweapon::BeginPlay()
 	//Attach to mesh bone
 	if (spring)
 		spring->AttachToComponent(mesh, FAttachmentTransformRules::KeepWorldTransform, armBone);
-	
-	//Bind inputs
-	GetOwner()->InputComponent->BindAxis("Vertical Camera", this, &Uweapon::setPitch);
-	GetOwner()->InputComponent->BindAxis("Horizontal Camera", this, &Uweapon::setYaw);
 }
 
 
@@ -57,17 +48,16 @@ void Uweapon::setCamera(USpringArmComponent * spring){
 }
 
 void Uweapon::setYaw(float angle) {
-	this->yaw = angle;
+	this->yaw += angle;
 }
 
 void Uweapon::setPitch(float angle) {
-	this->pitch = angle;
+	this->pitch += angle;
 }
 
 float Uweapon::getYaw() {
 	return yaw;
 }
-
 
 float Uweapon::getPitch() {
 	return pitch;

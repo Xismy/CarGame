@@ -10,11 +10,11 @@ public class EditorExtension : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new string[] { "UnrealEd", "BlueprintGraph", "AnimGraph" });
 
-        CircularlyReferencedDependentModules.AddRange(
+       /* CircularlyReferencedDependentModules.AddRange(
             new string[] {
                     "Juego",
                 }
-        );
+        );*/
 
         // Uncomment if you are using Slate UI
         // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

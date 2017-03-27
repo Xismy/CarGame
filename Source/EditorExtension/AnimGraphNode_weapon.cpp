@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "EditorExtension.h"
-#include "Editor/AnimGraph/Private/AnimGraphPrivatePCH.h"
 #include "AnimationGraphSchema.h"
 #include "AnimGraphNode_weapon.h"
 

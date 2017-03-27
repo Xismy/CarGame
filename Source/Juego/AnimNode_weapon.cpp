@@ -5,7 +5,7 @@
 #include "weapon.h"
 #include "AnimNode_weapon.h"
 
-FAnimNode_weapon::FAnimNode_weapon(){
+FAnimNode_weapon::FAnimNode_weapon(): pitch(0), yaw(0){
 
 }
 
@@ -23,20 +23,24 @@ void FAnimNode_weapon::CacheBones(const FAnimationCacheBonesContext & Context) {
 
 void FAnimNode_weapon::Update(const FAnimationUpdateContext & Context) {
 	ComponentPose.Update(Context);
+	EvaluateGraphExposedInputs.Execute(Context);
 }
 
 void FAnimNode_weapon::EvaluateComponentSpace(FComponentSpacePoseContext& Output) {
 	ComponentPose.EvaluateComponentSpace(Output);
-	float pitch = 0;//weapon->getPitch();
-	float yaw = 1.57;//weapon->getYaw();
+	TArray<FBoneTransform> transforms = TArray<FBoneTransform>();
 
 	FCompactPoseBoneIndex index = (FCompactPoseBoneIndex)base.BoneIndex;
 	FTransform transform = Output.Pose.GetComponentSpaceTransform(index);
-	transform.SetRotation(FQuat(cos(yaw/2), 0, 0, cos(yaw/2)));
-	Output.Pose.SetComponentSpaceTransform(index, transform);
+	transform.SetRotation(FQuat(FVector(0, 0, 1), yaw));
+	transforms.Add(FBoneTransform(index, transform));
 
-	/*index = (FCompactPoseBoneIndex)arm.BoneIndex;
+	index = (FCompactPoseBoneIndex)arm.BoneIndex;
 	transform = Output.Pose.GetComponentSpaceTransform(index);
-	transform.SetRotation(FQuat(cos(yaw / 2), 0, sin(yaw / 2),0));
-	Output.Pose.SetComponentSpaceTransform(index, transform);*/
+	transform.SetRotation(FQuat(FVector(0, 0, 1), yaw));
+	transform.ConcatenateRotation(FQuat(FVector(0, -1, 0), pitch));
+	transforms.Add(FBoneTransform(index, transform));
+	Output.Pose.LocalBlendCSBoneTransforms(transforms, 1);
+
 }
+
